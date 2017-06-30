@@ -8,12 +8,12 @@ read -p "New username:" username
 read -s -p "Password:" password
 
 apt-get update
-apt-get install sudo
-apt-get install git
+apt-get dist-upgrade
+apt-get install -y sudo
+apt-get install -y git
 useradd $username
 usermod -aG sudo $username
 mkdir /home/$username
-chsh -s /bin/bash $username
 
 # Setting up VIM
 git clone https://github.com/locpeople/vimrc /home/$username/.vim
@@ -44,7 +44,7 @@ VHOST=$(cat <<EOF
 </VirtualHost>
 EOF
 )
-sudo echo "${VHOST}" > /etc/apache2/sites-enabled/000-default.conf
+sudo sh -c 'echo "${VHOST}" > /etc/apache2/sites-enabled/000-default.conf'
 
 # Loading needed modules to make apache work
 sudo a2enmod actions fastcgi rewrite
@@ -58,13 +58,13 @@ sudo service apache2 reload
 sudo apt-get install -y php5 php5-cli php5-fpm curl libapache2-mod-php5 php5-curl php5-mcrypt php5-xdebug
 
 #Enabling xdebug
-sudo echo "zend_extension='/usr/lib/php5/20121212/xdebug.so'
-           xdebug.remote_enable=on
-           xdebug.remote_host=192.168.33.10
-        " >> /etc/php5/apache2/php.ini
+sudo bash -c "cat /etc/php5/apache2/php.ini" << EOL
+	zend_extension='/usr/lib/php5/20121212/xdebug.so'
+    xdebug.remote_enable=on
+EOL
 
 # Creating the configurations inside Apache
-sudo cat > /etc/apache2/conf-available/php5-fpm.conf << EOF
+sudo sh -c "cat > /etc/apache2/conf-available/php5-fpm.conf" << EOL
 <IfModule mod_fastcgi.c>
     AddHandler php5-fcgi .php
     Action php5-fcgi /php5-fcgi
@@ -78,7 +78,7 @@ sudo cat > /etc/apache2/conf-available/php5-fpm.conf << EOF
     </Directory>
 
 </IfModule>
-EOF
+EOL
 
 # Enabling php modules
 sudo php5enmod mcrypt
