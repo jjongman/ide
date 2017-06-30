@@ -13,6 +13,7 @@ apt-get install git
 useradd $username
 usermod -aG sudo $username
 mkdir /home/$username
+chsh -s /bin/bash $username
 
 # Setting up VIM
 git clone https://github.com/locpeople/vimrc /home/$username/.vim
