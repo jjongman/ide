@@ -19,6 +19,7 @@ usermod -aG sudo $username
 mkdir /home/$username
 
 # Setting up VIM
+apt-get install -y vim-nox
 git clone https://github.com/locpeople/vimrc /home/$username/.vim
 ln -s /home/$username/.vim/vimrc /home/$username/.vimrc
 
