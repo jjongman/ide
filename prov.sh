@@ -58,7 +58,7 @@ sudo service apache2 reload
 sudo apt-get install -y php5 php5-cli php5-fpm curl libapache2-mod-php5 php5-curl php5-mcrypt php5-xdebug
 
 #Enabling xdebug
-sudo bash -c "cat /etc/php5/apache2/php.ini" << EOL
+sudo bash -c "cat > /etc/php5/apache2/php.ini" << EOL
 	zend_extension='/usr/lib/php5/20121212/xdebug.so'
     xdebug.remote_enable=on
 EOL
