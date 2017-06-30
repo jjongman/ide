@@ -8,7 +8,7 @@ read -p "New username:" username
 read -s -p "Password:" password
 
 apt-get update
-apt-get dist-upgrade
+apt-get dist-upgrade -y
 apt-get install -y sudo
 apt-get install -y git
 useradd $username
