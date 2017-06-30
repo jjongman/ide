@@ -7,6 +7,8 @@
 read -p "New username:" username
 read -s -p "Password:" password
 
+apt-get update
+apt-get install software-properties-common python-software-properties
 apt-add-repository multiverse
 apt-get update
 apt-get dist-upgrade -y
