@@ -7,6 +7,7 @@
 read -p "New username:" username
 read -s -p "Password:" password
 
+apt-add-repository multiverse
 apt-get update
 apt-get dist-upgrade -y
 apt-get install -y sudo
