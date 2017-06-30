@@ -101,3 +101,21 @@ sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again p
 
 # Installing packages
 sudo apt-get install -y mysql-server mysql-client php5-mysql
+
+# ---------------------------------------
+#       Tools Setup.
+# ---------------------------------------
+# These are some extra tools that you can remove if you will not be using them
+# They are just to setup some automation to your tasks.
+
+# Adding NodeJS from Nodesource. This will Install NodeJS Version 6 and npm
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Installing some NPM packages
+npm install -g bower gulp webpack typescript
+
+# Install Composer
+curl -s https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+
