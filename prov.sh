@@ -56,14 +56,14 @@ chown -R $username:$username /home/$username
 echo $username":"$password | chpasswd
 
 # Updating packages
-sudo apt-get update
+apt-get update
 
 # ---------------------------------------
 #          Apache Setup
 # ---------------------------------------
 
 # Installing Packages
-sudo apt-get install -y apache2 libapache2-mod-fastcgi apache2-mpm-worker
+apt-get install -y apache2 libapache2-mod-fastcgi apache2-mpm-worker
 
 # Add ServerName to httpd.conf
 sudo sh -c "echo "ServerName localhost" > /etc/apache2/httpd.conf"
@@ -80,15 +80,15 @@ EOF
 sudo sh -c 'echo "${VHOST}" > /etc/apache2/sites-enabled/000-default.conf'
 
 # Loading needed modules to make apache work
-sudo a2enmod actions fastcgi rewrite
-sudo service apache2 reload
+a2enmod actions fastcgi rewrite
+service apache2 reload
 
 # ---------------------------------------
 #          PHP Setup
 # ---------------------------------------
 
 # Installing packages
-sudo apt-get install -y php5 php5-cli php5-fpm curl libapache2-mod-php5 php5-curl php5-mcrypt php5-xdebug
+apt-get install -y php5 php5-cli php5-fpm curl libapache2-mod-php5 php5-curl php5-mcrypt php5-xdebug
 
 #Enabling xdebug
 sudo bash -c "cat > /etc/php5/apache2/php.ini" << EOL
@@ -114,11 +114,11 @@ sudo sh -c "cat > /etc/apache2/conf-available/php5-fpm.conf" << EOL
 EOL
 
 # Enabling php modules
-sudo php5enmod mcrypt
+php5enmod mcrypt
 
 # Triggering changes in apache
-sudo a2enconf php5-fpm
-sudo service apache2 reload
+a2enconf php5-fpm
+service apache2 reload
 
 # ---------------------------------------
 #          MySQL Setup
@@ -129,7 +129,7 @@ sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password passwor
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
 
 # Installing packages
-sudo apt-get install -y mysql-server mysql-client php5-mysql
+apt-get install -y mysql-server mysql-client php5-mysql
 
 # ---------------------------------------
 #       Tools Setup.
@@ -139,7 +139,7 @@ sudo apt-get install -y mysql-server mysql-client php5-mysql
 
 # Adding NodeJS from Nodesource. This will Install NodeJS Version 6 and npm
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs
+apt-get install -y nodejs
 
 # Installing some NPM packages
 npm install -g bower gulp webpack typescript
