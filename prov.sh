@@ -48,13 +48,9 @@ update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
 update-alternatives --set vi /usr/bin/vim
 
 
-git clone https://github.com/locpeople/vimrc /home/$username/.vim
+git clone https://github.com/locpeople/vimrc /home/$username/.vim --recursive
 cd /home/$user/.vim/bundle
-git clone https://github.com/jiangmiao/auto-pairs
 ln -s /home/$username/.vim/vimrc /home/$username/.vimrc
-
-chown -R $username:$username /home/$username
-echo $username":"$password | chpasswd
 
 # Updating packages
 apt-get update
@@ -148,3 +144,17 @@ npm install -g bower gulp webpack typescript
 # Install Composer
 curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
+
+# Installing YouCompleteMe
+apt-get install build-essential cmake
+apt-get install python-dev python3-dev
+cd /home/$username/.vim/bundle
+git clone https://github.com/Valloric/YouCompleteMe --recursive
+cd YouCompleteMe
+./install.py --tern-completer
+
+
+#Finalizing
+chown -R $username:$username /home/$username
+echo $username":"$password | chpasswd
+cd ~
