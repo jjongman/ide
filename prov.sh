@@ -9,11 +9,15 @@ read -s -p "Password:" password
 
 apt-get update
 apt-get install -y software-properties-common python-software-properties
+add-apt-repository ppa:ubuntu-toolchain-r/test -y
 apt-add-repository multiverse
 apt-get update
 apt-get dist-upgrade -y
 apt-get install -y sudo
 apt-get install -y git
+apt-get remove -y gcc g++
+apt-get install -y gcc-5 g++-5
+update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 60 --slave /usr/bin/g++ g++ /usr/bin/g++-5
 
 useradd $username
 usermod -aG sudo $username
@@ -21,8 +25,32 @@ mkdir /home/$username
 chsh -s /bin/bash $username
 
 # Setting up VIM
+apt-get -y install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev \
+	libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
+apt-get -y remove vim vim-runtime gvim
+cd ~
+git clone https://github.com/vim/vim.git
+cd vim
+./configure --with-features=huge \
+            --enable-multibyte \
+            --enable-rubyinterp=yes \
+            --enable-python3interp=yes \
+            --with-python3-config-dir=/usr/lib/python3.5/config \
+            --enable-perlinterp=yes \
+            --enable-luainterp=yes \
+            --enable-gui=gtk2 --enable-cscope --prefix=/usr
+make VIMRUNTIMEDIR=/usr/share/vim/vim80
+cd ~/vim
+make install
+update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
+update-alternatives --set editor /usr/bin/vim
+update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
+update-alternatives --set vi /usr/bin/vim
+
 
 git clone https://github.com/locpeople/vimrc /home/$username/.vim
+cd /home/$user/.vim/bundle
+git clone https://github.com/jiangmiao/auto-pairs
 ln -s /home/$username/.vim/vimrc /home/$username/.vimrc
 
 chown -R $username:$username /home/$username
@@ -120,4 +148,3 @@ npm install -g bower gulp webpack typescript
 # Install Composer
 curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
-
