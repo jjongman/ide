@@ -21,6 +21,7 @@ update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 60 --slave /usr/bi
 useradd $username
 usermod -aG sudo $username
 mkdir /home/$username
+chsh -s /bin/bash $username
 
 # Setting up VIM
 apt-get -y install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev \
